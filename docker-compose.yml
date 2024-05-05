@@ -1,0 +1,62 @@
+version: '3.2'
+
+services:
+  secret:
+    container_name: 'secret'
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_ALLOW_EMPTY_PASSWORD: no
+    expose:
+      - 3306
+    volumes:
+      - secret-db:/var/lib/mysql
+  db:
+    container_name: 'db'
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_ALLOW_EMPTY_PASSWORD: no
+    expose:
+      - '3306'
+    volumes:
+      - normal-db:/var/lib/mysql
+  backend:
+    environment:
+      - DATABASE_USER=root
+      - DATABASE_PASS=password
+      - DATABASE_HOST=db
+      - DATABASE_PORT=3306
+      - DATABASE_NAME=mysql
+
+      - SECRET_HOST=secret
+      - ALLOWED_ORIGIN_SUFFIXES=localhost|${HOSTNAME}|${IP} # hostname and host ip
+    build:
+      dockerfile: backend.Dockerfile
+    restart: always
+    depends_on:
+      - db
+      - secret
+  frontend:
+    build:
+      dockerfile: frontend.Dockerfile
+      args:
+        HOSTNAME: ${HOSTNAME}
+    restart: always
+    depends_on:
+      - backend
+  proxy:
+    build: proxy/
+    restart: always
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - 443:443
+    volumes:
+      - ./nginx-tls/:/app/https
+volumes:
+  normal-db:
+  secret-db:

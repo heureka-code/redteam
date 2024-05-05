@@ -1,0 +1,13 @@
+@import "colors";
+
+.material-symbols-outlined {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
+      padding-left: 0.39rem;
+      padding-right: 0.39rem;
+      text-decoration: none;
+      color: var($font-color);
+}

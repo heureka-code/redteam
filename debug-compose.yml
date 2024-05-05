@@ -1,0 +1,15 @@
+version: '3.2'
+
+services:
+  secret:
+    extends:
+      file: docker-compose.yml
+      service: secret
+    ports:
+      - '3307:3306' # Only for local testing
+  db:
+    extends:
+      file: docker-compose.yml
+      service: db
+    ports:
+      - '3306:3306' # Only for local testing

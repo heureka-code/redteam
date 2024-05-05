@@ -1,0 +1,10 @@
+$background-color: rgb(25, 35, 44);
+$font-color: white;
+$primary-color: lime;
+$secondary-color: cyan;
+
+$border-color: lighten($color: $background-color, $amount: 10);
+
+@mixin border-gradient($direction) {
+    background: linear-gradient(to $direction, $background-color, $border-color);
+}

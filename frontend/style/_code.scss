@@ -1,0 +1,38 @@
+.hljs-string,
+.hljs-section,
+.hljs-selector-class,
+.hljs-template-variable,
+.hljs-deletion {
+    color: rgb(49, 242, 5);
+}
+
+.hljs-keyword {
+    color: rgb(255, 70, 248);
+}
+
+.hljs-operator {
+    color: rgb(22, 156, 246);
+}
+
+.hljs-type,
+.hljs-number {
+    color: lighten(rgb(238, 93, 4), 10);
+}
+
+.hljs-literal {
+    color: lighten(#695, 20);
+}
+
+@media screen and (min-width: 1000px) {
+    .code-create-tables {
+        display: flex;
+
+        #code-create-user-table {
+            margin-right: auto;
+        }
+
+        #code-create-pet-table {
+            margin-left: auto;
+        }
+    }
+}

@@ -1,0 +1,9 @@
+.left-main-border {
+    @include border-gradient(left);
+    grid-area: left-border;
+}
+
+.right-main-border {
+    @include border-gradient(right);
+    grid-area: right-border;
+}

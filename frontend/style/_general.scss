@@ -1,0 +1,119 @@
+@import "colors";
+
+
+body {
+    height: 100vh;
+    background-color: $background-color;
+    color: $font-color;
+    font-size: 1rem;
+    font-family: Calibri, Arial;
+    box-sizing: border-box;
+    margin-top: auto;
+    margin-right: 0;
+    margin-left: 0;
+    margin-bottom: auto;
+    padding: 0;
+
+    display: grid;
+    grid-template-columns: 1fr 8fr 1fr;
+    //grid-template-rows: 7rem 1fr;
+    grid-template-areas:
+        //"left-border    header      right-border"
+        "left-border    content     right-border";
+}
+
+h1 {
+    text-align: center;
+}
+
+.introduction {
+    font-size: 1.2em;
+}
+
+.main-middle {
+    grid-area: content;
+    margin-bottom: 30%;
+}
+
+main {
+    width: 80%;
+    background-color: $background-color;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+
+    h1 {
+        margin-top: 0;
+    }
+
+    form {
+        width: 100%;
+        display: grid;
+        grid-template-columns: auto;
+        row-gap: 7px;
+
+        input {
+            font-size: 1.1rem;
+            width: 100%;
+            border-radius: 0.4em;
+            line-height: 1.5;
+            box-sizing: border-box;
+            background-color: darken($color: $background-color, $amount: 5);
+            padding-left: 0.4rem;
+            padding-right: 0.4rem;
+            border-width: 1px;
+            color: lighten($color: lime, $amount: 10);
+        }
+    }
+
+    .pending-label {
+        font-size: 2rem;
+        display: flex;
+
+        .loading-spinner {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .cracked-password {
+        display: flex;
+        margin-top: 1rem;
+        font-size: 1.1rem;
+        width: 100%;
+        border-radius: 0.4em;
+        line-height: 1.5;
+        box-sizing: border-box;
+        padding-left: 0.4rem;
+        padding-right: 0.4rem;
+        border-width: 1px;
+        color: lighten($color: lime, $amount: 10);
+
+        .cracked-password-label {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-right: auto;
+        }
+
+        .cracked-password-value {
+            font-size: 2rem;
+            color: yellow;
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: auto;
+        }
+    }
+
+    .error-msg {
+        margin-top: 1rem;
+        font-size: 2em;
+        color: lighten($color: red, $amount: 2);
+        text-align: center;
+        width: 100%;
+    }
+}
+
+button:hover {
+    color: #0099dd;
+}
