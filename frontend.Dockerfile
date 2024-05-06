@@ -13,12 +13,9 @@ RUN echo "pub fn get_database_url() -> std::sync::Arc<str> { \"https://${HOSTNAM
 
 EXPOSE 8080
 RUN trunk build --release
-CMD ["trunk", "serve", "--release"]
 
-#RUN mkdir /target-binary && cargo install --root /target-binary/ --path backend
-
-#FROM gcr.io/distroless/cc-debian10
-
-#COPY --from=build /target-binary/bin/redteam-demo-backend /usr/local/bin/backend-service
-
-#CMD ["/target-binary/bin/redteam-demo-backend"]
+FROM nginx:1.26.0 as run
+WORKDIR /page
+RUN rm /etc/nginx/conf.d/ -r && mkdir /etc/nginx/conf.d
+COPY --from=build /usr/src/frontend-service/frontend/dist/ /page/dist/
+COPY frontend/frontend.conf /etc/nginx/conf.d/
