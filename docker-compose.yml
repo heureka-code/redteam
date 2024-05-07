@@ -30,6 +30,7 @@ services:
       - DATABASE_HOST=db
       - DATABASE_PORT=3306
       - DATABASE_NAME=mysql
+      - JWT_KEY=${JWT_KEY}
 
       - SECRET_HOST=secret
       - ALLOWED_ORIGIN_SUFFIXES=localhost|${HOSTNAME}|${IP} # hostname and host ip
