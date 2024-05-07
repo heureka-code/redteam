@@ -207,8 +207,21 @@ pub async fn setup_database(pool: &MySqlPool, secret_db: &MySqlPool) {
         .execute(pool)
         .await
     );
-
     futures::join!(
+        add_user_with_pets_to_database(
+            pool,
+            secret_db,
+            "Mia",
+            HashMap::from([("Pfote", "Katze")]),
+            false,
+        ),
+        add_user_with_pets_to_database(
+            pool,
+            secret_db,
+            "Andreas",
+            HashMap::from([("Cody", "Katze")]),
+            false
+        ),
         add_user_with_pets_to_database(
             pool,
             secret_db,
