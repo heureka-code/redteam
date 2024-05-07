@@ -56,9 +56,9 @@ pub fn cracking_page() -> Html {
 
     let username = dispatch.get().username.clone().unwrap_or("".to_string());
     html!(
-        <Page title={"Enter your guess, ".to_owned() + &username} logout=true>
+        <Page title={"Enter your guess for the admin, ".to_owned() + &username} logout=true>
         <form onsubmit={onsubmit}>
-            <TextInput class={classes!("username-guess")} onchange={username_changed} name={"username"} placeholder={"username"}/>
+            <TextInput class={classes!("username-guess")} onchange={username_changed} name={"username"} placeholder={"admin username"}/>
             <TextInput class={classes!("hash-guess")} onchange={hash_changed} name={"password-hash"} placeholder={"password hash"}/>
             <input name={"submitBtn"} type={"submit"} disabled={disabled}/>
         </form>
