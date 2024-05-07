@@ -7,7 +7,22 @@ pub struct JwtKey(hmac::Hmac<sha2::Sha256>);
 impl JwtKey {
     pub fn new() -> Result<Self, jwt::Error> {
         use hmac::Mac;
-        Ok(Self(hmac::Hmac::new_from_slice(b"secret key of app")?))
+        let envvar = std::env::var("JWT_KEY").unwrap_or("".into());
+        let key = envvar.trim();
+        let key = if key == "" {
+            use rand::{distributions::Alphanumeric, Rng};
+            log::warn!("Jwt key is set randomly on every boot. Please set environment variable JWT_KEY to a random token");
+
+            rand::thread_rng()
+                .sample_iter(&Alphanumeric)
+                .take(39)
+                .map(char::from)
+                .collect()
+        } else {
+            log::info!("Jwt key from environment variable is used");
+            key.to_owned()
+        };
+        Ok(Self(hmac::Hmac::new_from_slice(key.as_bytes())?))
     }
 }
 
