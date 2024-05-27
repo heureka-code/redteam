@@ -9,6 +9,6 @@ WORKDIR /usr/src/backend-service/backend
 EXPOSE 20103
 RUN mkdir /target-binary && cargo install --root /target-binary/ --path . --bin redteam-demo-backend
 
-FROM ubuntu:24.04 as run
+FROM gcr.io/distroless/cc-debian12 as run
 COPY --from=build /target-binary/bin/redteam-demo-backend /target-binary/bin/backend-service
 CMD ["/target-binary/bin/backend-service"]

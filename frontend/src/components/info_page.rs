@@ -74,7 +74,7 @@ pub fn info_page() -> Html {
                     <li>{"Login as administrator"}</li>
                 </ol>
                 <p><b>{"All passwords are completly random and too long too guess them. So don't waste your time trying!"}</b></p>
-                <p>{"The database's structure is given to you as a hint:"}</p>
+                <p>{"The database's structure (MySQL, so you can comment with #) is given to you as a hint:"}</p>
                 </div>
                 <div class={classes!("code-create-tables")}>
                     <CodeHighlight id={"code-create-user-table"}>{create_users}</CodeHighlight>

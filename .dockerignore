@@ -1,4 +1,8 @@
+*.md
+*.yml
 ./*/.env
 .env
 .git/
+.pre-commit-config.yaml
+nginx-tls
 target/
