@@ -20,8 +20,24 @@ async fn login_user(
 
     let hashed_password = super::hash_password(password);
 
+    use sqlx::Executor;
+    use sqlx::Row;
+
+    let maybe_hacked_username: Option<String> = readonly
+            .fetch_optional(
+                format!("SELECT username FROM users WHERE username='{username}' AND password_hash='{hashed_password}'").as_str(),
+            )
+            .await
+            .map_err(|err| {
+                log::error!(
+                    "Unexpected error on searching for '{username}' (non admin): {err:?}"
+                );
+                actix_web::error::ErrorInternalServerError(err)
+            })?
+            .map(|row| row.get(0));
+
     let is_admin: bool = sqlx::query_scalar("SELECT is_admin FROM users WHERE username=?")
-        .bind(username)
+        .bind(&maybe_hacked_username)
         .fetch_optional(db)
         .await
         .map_err(|err| {
@@ -29,9 +45,6 @@ async fn login_user(
             actix_web::error::ErrorInternalServerError(err)
         })?
         .unwrap_or(false);
-
-    use sqlx::Executor;
-    use sqlx::Row;
 
     if is_admin {
         let found_users: i64 =
@@ -51,18 +64,6 @@ async fn login_user(
             username, token,
         )));
     } else {
-        let maybe_hacked_username: Option<String> = readonly
-            .fetch_optional(
-                format!("SELECT username FROM users WHERE username='{username}' AND password_hash='{hashed_password}'").as_str(),
-            )
-            .await
-            .map_err(|err| {
-                log::error!(
-                    "Unexpected error on searching for '{username}' (non admin): {err:?}"
-                );
-                actix_web::error::ErrorInternalServerError(err)
-            })?
-            .map(|row| row.get(0));
         return if let Some(username) = maybe_hacked_username {
             let token = get_user_token(db, &jwt_key, &username).await?;
             Ok(Json(common::ResponseLoginUser::new_accepted(
