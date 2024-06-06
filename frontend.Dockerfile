@@ -8,8 +8,7 @@ COPY common/ common/
 COPY frontend/ frontend/
 WORKDIR /usr/src/frontend-service/frontend
 
-ARG HOSTNAME
-RUN echo "pub fn get_database_url() -> std::sync::Arc<str> { \"https://${HOSTNAME}/redteam-backend\".into() }" > src/api/config.rs
+ARG RT_HOSTNAME
 
 EXPOSE 8080
 RUN trunk build --release

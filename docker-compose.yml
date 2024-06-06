@@ -33,7 +33,7 @@ services:
       - JWT_KEY=${JWT_KEY}
 
       - SECRET_HOST=secret
-      - ALLOWED_ORIGIN_SUFFIXES=localhost|${HOSTNAME}|${IP} # hostname and host ip
+      - ALLOWED_ORIGIN_SUFFIXES=localhost|${RT_HOSTNAME}|${IP} # hostname and host ip
     build:
       dockerfile: backend.Dockerfile
       context: .
@@ -45,7 +45,7 @@ services:
     build:
       dockerfile: frontend.Dockerfile
       args:
-        HOSTNAME: ${HOSTNAME}
+        RT_HOSTNAME: ${RT_HOSTNAME}
     restart: always
     depends_on:
       - backend

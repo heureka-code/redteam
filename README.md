@@ -3,9 +3,9 @@ This application demonstrates how sql injections work by providing an unsafe pag
 
 ## Setup
 Only docker compose is required to run the application.
-The api needs to know where to locate the backend. Therefore you have to set the environment variable "HOSTNAME" at build time, so when running ``docker compose build``. You can do this for example by adding a file called ``.env`` next to ``docker-compose.yml``:
+The api needs to know where to locate the backend. Therefore you have to set the environment variable "RT_HOSTNAME" at build time, so when running ``docker compose build``. You can do this for example by adding a file called ``.env`` next to ``docker-compose.yml``:
 ```env
-HOSTNAME=...
+RT_HOSTNAME=...
 IP=...
 ```
 (IP is optional)
