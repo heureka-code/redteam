@@ -19,7 +19,7 @@
 
     div {
         background-color: lighten(blue, 10);
-        overflow-x: scroll;
+        overflow-x: auto;
     }
 
     div:nth-child(2n) {

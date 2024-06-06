@@ -7,7 +7,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 'password'
-      MYSQL_ALLOW_EMPTY_PASSWORD: no
+      MYSQL_ALLOW_EMPTY_PASSWORD: 0
     expose:
       - 3306
     volumes:
@@ -18,7 +18,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 'password'
-      MYSQL_ALLOW_EMPTY_PASSWORD: no
+      MYSQL_ALLOW_EMPTY_PASSWORD: 0
     expose:
       - '3306'
     volumes:
@@ -36,6 +36,7 @@ services:
       - ALLOWED_ORIGIN_SUFFIXES=localhost|${HOSTNAME}|${IP} # hostname and host ip
     build:
       dockerfile: backend.Dockerfile
+      context: .
     restart: always
     depends_on:
       - db
