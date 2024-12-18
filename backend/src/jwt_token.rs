@@ -60,6 +60,7 @@ pub async fn get_user_token(
     db: &MySqlPool,
     jwt_key: &JwtKey,
     username: &str,
+    is_admin: bool,
 ) -> actix_web::Result<String> {
     async fn set_last_gen_time(
         executor: &MySqlPool,
@@ -85,6 +86,21 @@ pub async fn get_user_token(
             actix_web::error::ErrorInternalServerError(err)
         })?
         .ok_or(actix_web::error::ErrorInternalServerError("No user found"))?;
+    let query_is_admin: bool = sqlx::query_scalar("SELECT is_admin FROM users WHERE username=?")
+        .bind(username)
+        .fetch_optional(db)
+        .await
+        .map_err(|err| {
+            log::error!("is_admin query failed: '{username}'");
+            actix_web::error::ErrorInternalServerError(err)
+        })?
+        .ok_or(actix_web::error::ErrorInternalServerError("No user found"))?;
+    if query_is_admin != is_admin {
+        log::info!("Someone tried an unusual username for tricking the admin detection: [{username}]. This is very impressive.");
+        Err(actix_web::error::ErrorBadRequest(
+            "Good try, but this doesn't work",
+        ))?;
+    }
 
     let last_gen: Option<chrono::DateTime<chrono::Local>> =
         sqlx::query_scalar("SELECT last_token_generation FROM users WHERE username=? AND last_token_generation is not null")

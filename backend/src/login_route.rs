@@ -23,6 +23,8 @@ async fn login_user(
     use sqlx::Executor;
     use sqlx::Row;
 
+    log::info!("Someone tries: user=['{username}'] query=[{}]", format!("SELECT username FROM users WHERE username='{username}' AND password_hash='{hashed_password}'").as_str());
+
     let maybe_hacked_username: Option<String> = readonly
             .fetch_optional(
                 format!("SELECT username FROM users WHERE username='{username}' AND password_hash='{hashed_password}'").as_str(),
@@ -38,7 +40,7 @@ async fn login_user(
 
     let is_admin: bool = sqlx::query_scalar("SELECT is_admin FROM users WHERE username=?")
         .bind(&maybe_hacked_username)
-        .fetch_optional(db)
+        .fetch_optional(readonly)
         .await
         .map_err(|err| {
             log::error!("Unexpected error on deciding whether '{username}' is admin: {err:?}");
@@ -51,7 +53,7 @@ async fn login_user(
             sqlx::query_scalar("SELECT COUNT(*) FROM users WHERE username=? AND password_hash=?")
                 .bind(username)
                 .bind(&hashed_password)
-                .fetch_one(db)
+                .fetch_one(readonly)
                 .await
                 .map_err(actix_web::error::ErrorInternalServerError)?;
         tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
@@ -59,13 +61,13 @@ async fn login_user(
             return Ok(Json(common::ResponseLoginUser::new_invalid(username)));
         }
 
-        let token = get_user_token(db, &jwt_key, username).await?;
+        let token = get_user_token(db, &jwt_key, username, true).await?;
         return Ok(Json(common::ResponseLoginUser::new_accepted(
             username, token,
         )));
     } else {
         return if let Some(username) = maybe_hacked_username {
-            let token = get_user_token(db, &jwt_key, &username).await?;
+            let token = get_user_token(db, &jwt_key, &username, false).await?;
             Ok(Json(common::ResponseLoginUser::new_accepted(
                 username, token,
             )))
