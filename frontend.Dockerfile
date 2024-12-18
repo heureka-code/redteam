@@ -1,4 +1,4 @@
-FROM rust:1.76 as build
+FROM rust:1.81 as build
 ENV PKG_CONFIG_ALLOW_CROSS=1
 
 RUN rustup target add wasm32-unknown-unknown && cargo install trunk
