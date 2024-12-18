@@ -29,7 +29,7 @@ struct User {
 
 #[actix_web::main]
 async fn main() -> Result<(), std::io::Error> {
-    dotenv::dotenv().ok();
+    dotenvy::dotenv().ok();
     std::env::set_var("RUST_LOG", "debug");
     std::env::set_var("RUST_BACKTRACE", "0");
     env_logger::init();

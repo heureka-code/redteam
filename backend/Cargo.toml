@@ -24,7 +24,7 @@ log = "0.4.21"
 env_logger = { version = "0.11.3" }
 common = { version = "0.1.0", path = "../common" }
 actix-cors = "0.7.0"
-dotenv = "0.15.0"
+dotenvy = "0.15.0"
 futures = "0.3.30"
 sha2 = "0.10.8"
 base85 = "2.0.0"

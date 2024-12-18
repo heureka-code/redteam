@@ -20,7 +20,7 @@ fn app() -> Html {
 }
 
 fn main() {
-    dotenv::dotenv().ok();
+    dotenvy::dotenv().ok();
 
     wasm_logger::init(wasm_logger::Config::default());
     yew::Renderer::<App>::new().render();
