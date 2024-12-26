@@ -6,8 +6,8 @@ COPY Cargo.* .
 # Dummy packages
 RUN cargo new backend && cargo new frontend && cargo new common
 # Only build dependencies
-COPY backend/Cargo.toml backend/
-COPY common/Cargo.toml common/
+COPY backend/Cargo.* backend/
+COPY common/Cargo.* common/
 RUN cargo build
 RUN cargo build --release
 RUN rm -rf backend common
@@ -15,7 +15,7 @@ RUN rm -rf backend common
 # Now add own source code
 COPY common/ common/
 COPY backend/src backend/src
-COPY backend/Cargo.toml backend/
+COPY backend/Cargo.* backend/
 
 WORKDIR /usr/src/backend-service/backend
 EXPOSE 20103

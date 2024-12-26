@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 actix-web = "4.5.1"
-serde = "1.0.199"
+serde = "1"
 async-std = "1.12.0"
 sqlx = { version = "0.8", default-features = false, features = [
     "runtime-async-std",
@@ -16,20 +16,20 @@ sqlx = { version = "0.8", default-features = false, features = [
     "time",
     "chrono",
 ] }
-time = { version = "0.3.22", default-features = false, features = [
+time = { version = "0.3", default-features = false, features = [
     "formatting",
     "macros",
 ] }
-log = "0.4.21"
-env_logger = { version = "0.11.3" }
+log = "0.4"
+env_logger = { version = "0.11" }
 common = { version = "0.1.0", path = "../common" }
 actix-cors = "0.7.0"
-dotenvy = "0.15.0"
+dotenvy = "0.15"
 futures = "0.3.30"
-sha2 = "0.10.8"
+sha2 = "0.10"
 base85 = "2.0.0"
 rand = "0.8.5"
-tokio = "1.37.0"
-chrono = "0.4.38"
-jwt = "0.16.0"
-hmac = "0.12.1"
+tokio = "1.37"
+chrono = "0.4"
+jwt = "0.16"
+hmac = "0.12"

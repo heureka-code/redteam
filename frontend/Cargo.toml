@@ -7,8 +7,8 @@ edition = "2021"
 
 [dependencies]
 common = { version = "0.1.0", path = "../common" }
-dotenvy = "0.15.0"
-log = "0.4.21"
+dotenvy = "0.15"
+log = "0.4"
 reqwasm = "0.5.0"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
@@ -23,4 +23,4 @@ yewdux = "0.10.0"
 yewdux-functional = "0.1.0"
 
 [build-dependencies]
-dotenvy = "0.15.0"
+dotenvy = "0.15"

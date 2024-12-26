@@ -10,8 +10,8 @@ COPY Cargo.* .
 RUN cargo new backend && cargo new frontend && cargo new common
 # Only build dependencies
 RUN echo "" > frontend/index.scss && echo "<html><head><link data-trunk rel=\"rust\" /><link data-trunk rel=\"sass\" href=\"index.scss\" /></head><body></body></html>" > frontend/index.html
-COPY frontend/Cargo.toml frontend/
-COPY common/Cargo.toml common/
+COPY frontend/Cargo.* frontend/
+COPY common/Cargo.* common/
 WORKDIR /usr/src/frontend-service/frontend
 RUN trunk build
 RUN trunk build --release
